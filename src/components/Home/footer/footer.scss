@@ -1,0 +1,64 @@
+@import "../../../global.scss";
+
+.footer {
+  .footerWrapper {
+    width: 92%;
+    margin: 0 auto;
+    padding-top: 40px;
+    .footerlogo {
+      padding: 10px 0px;
+      color: #464545;
+      @extend .heading_1;
+      text-align: center;
+      border-bottom: 1px solid gray;
+      border-top: 1px solid gray;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .logoColor {
+        color: rgb(236, 154, 1);
+      }
+    }
+
+    .footerBottom {
+      padding: 30px 0px 20px 0px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .footerTitles {
+        .footerTitle {
+          @extend .heading_3;
+        }
+        div {
+          padding: 5px 0px;
+          @extend .body_4;
+          text-align: center;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .copyrights {
+    background-color: $furniture;
+
+    .copyrightsWrapper {
+      width: 92%;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .copyLeft {
+      color: #fff;
+      @extend .body_2;
+    }
+    .copyCenter {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      cursor: pointer;
+    }
+  }
+}

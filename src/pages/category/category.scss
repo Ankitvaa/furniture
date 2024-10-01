@@ -1,0 +1,62 @@
+.homeCategory {
+    display: flex;
+    flex-wrap: wrap; // Allows items to wrap onto the next line
+    justify-content: center; // Centers items
+    padding: 20px; // Padding around the container
+    gap:20px; // Space between items
+
+    // Individual product item
+    > div {
+        flex: 1 1 calc(25% - 20px); // 4 items per row with space
+        background-color: #f9f9f9; // Light background for product item
+        border: 1px solid #ddd; // Light border
+        border-radius: 8px; // Rounded corners
+        overflow: hidden; // Prevents overflow
+        transition: transform 0.3s; // Animation for hover effect
+        margin-bottom: 20px; // Space below items
+
+        // Hover effect for product item
+        &:hover {
+            transform: scale(1.05); // Slightly enlarge on hover
+        }
+
+        // Image styling
+        img {
+            width: 100%; // Full width
+            height: auto; // Maintain aspect ratio
+        }
+
+        // Name and price container
+        .name-price {
+            padding: 20px; // Padding inside the container
+            text-align: center; // Center text
+
+            // Product title styling
+            .productTitle {
+                font-size: 1.2em; // Larger font for title
+                font-weight: bold; // Bold title
+                margin-bottom: 10px; // Space below title
+                color: #333; // Text color
+            }
+
+            // Product price styling
+            .productPrice {
+                font-size: 1em; // Font size for price
+                color: #28a745; // Green color for price
+            }
+        }
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .homeCategory > div {
+        flex: 1 1 calc(50% - 20px); // 2 items per row
+    }
+}
+
+@media (max-width: 480px) {
+    .homeCategory > div {
+        flex: 1 1 100%; // 1 item per row
+    }
+}

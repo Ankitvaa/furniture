@@ -1,0 +1,24 @@
+@import "../../../global.scss";
+.header {
+  background: $warning;
+  .headerWrapper {
+    padding: 16px 0px;
+    color: #fff;
+    width: 92%;
+    margin: 0 auto;
+    @include d_flex;
+    justify-content: space-between;
+    .headerLeft {
+      @include d_flex;
+      gap: 4px;
+      @extend .body_4;
+    }
+    .headerCenter {
+      @extend .body_2;
+    }
+    .headerRight {
+      @include d_flex;
+      @extend .body_4;
+    }
+  }
+}

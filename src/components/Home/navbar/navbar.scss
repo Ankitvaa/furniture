@@ -1,0 +1,33 @@
+@import "../../../global.scss";
+.navbar {
+  padding: 10px 0px 100px 0px;
+  background: $furniture;
+  .navbarWrapper {
+    @include d_flex;
+    justify-content: space-between;
+    color: #fff;
+    width: 92%;
+    margin: 0 auto;
+    .navLeft {
+      @extend .heading_2;
+      cursor: pointer;
+    }
+    .navCenter {
+      ul {
+        @include d_flex;
+        list-style: none;
+        align-items: center;
+        gap: 20px;
+
+        li {
+      @extend .body_3;
+      cursor: pointer;
+        }
+      }
+    }
+    .navRight {
+      @include d_flex;
+      gap: 20px;
+    }
+  }
+}

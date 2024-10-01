@@ -1,0 +1,89 @@
+@import "../../global.scss";
+
+.home {
+  // padding-left: 30.594px;
+  background: $furniture;
+  .homeWrapper {
+    width: 92%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .homeLeft {
+      flex: 0 0 40%;
+      .leftTop {
+        p {
+          width: 35%;
+          padding: 4px 10px;
+          border-radius: 16px;
+          color: #fff;
+          background-color: black;
+          @extend .body_2;
+        }
+        div {
+          @extend .heading_1;
+          color: #fff;
+        }
+      }
+
+      .leftCenter {
+        .desc {
+          @extend .body_2;
+          color: #fff;
+        }
+
+        .lcLinks {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          padding: 25px 0px;
+          .shopNow {
+            padding: 10px;
+            border-radius: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: rgb(216, 163, 63);
+            :first-child {
+              color: #fff;
+            }
+          }
+
+          .follow-on-insta {
+            @extend .body_2;
+            color: #fff;
+          }
+        }
+      }
+
+      .leftBottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 20px;
+
+        .ourworth {
+          display: flex;
+          flex-direction: column;
+
+          div {
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+          }
+
+          p {
+            margin: 0;
+            color: #ccc;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+
+    .homeRight {
+      flex: 0 0 60%;
+    }
+  }
+}
