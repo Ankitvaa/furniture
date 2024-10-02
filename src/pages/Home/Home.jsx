@@ -1,8 +1,15 @@
+import { useEffect } from "react";
 import Category from "../../components/Home/category/Category";
 import "./home.scss";
 import ArrowRightAltOutlinedIcon from "@mui/icons-material/ArrowRightAltOutlined";
+import { useDispatch } from "react-redux";
+import { fetchingData } from "../../redux/fetchDataSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(fetchingData())
+  },[])
   return (
     <>
       <div className="home">

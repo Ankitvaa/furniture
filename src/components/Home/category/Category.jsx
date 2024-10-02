@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -7,6 +6,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch } from "react-redux";
 import { filterFurniture } from "../../../redux/fetchDataSlice";
+import { useNavigate } from "react-router-dom";
 
 // Custom Next Arrow
 const NextArrow = (props) => {
@@ -28,28 +28,35 @@ const PrevArrow = (props) => {
   );
 };
 
-const images = [
-  { id: 1, url: "/1.jpg", alt: "Image 1", name: "Table", category: "Living Room" },
+const filterimages = [
+  {
+    id: 1,
+    url: "/1.jpg",
+    alt: "Image 1",
+    name: "Table",
+    category: "livingRoom",
+  },
   { id: 2, url: "/2.jpg", alt: "Image 2", name: "Chair", category: "Bedroom" },
   { id: 3, url: "/3.jpg", alt: "Image 3", name: "Desk", category: "Office" },
-  { id: 4, url: "/4.jpg", alt: "Image 4", name: "Cabinet", category: "Kitchen" },
-  { id: 5, url: "/5.jpg", alt: "Image 5", name: "Sofa", category: "Living Room" },
-];
-
-const categories = [
-  "All",
-  "Living Room",
-  "Bedroom",
-  "Office",
-  "Kitchen",
-  "Outdoor",
-  "Dining Room",
-  "Entryway",
+  {
+    id: 4,
+    url: "/4.jpg",
+    alt: "Image 4",
+    name: "Cabinet",
+    category: "Kitchen",
+  },
+  {
+    id: 5,
+    url: "/1.jpg",
+    alt: "Image 5",
+    name: "Sofa",
+    category: "LivingRoom",
+  },
 ];
 
 const Category = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const settings = {
     dots: true,
@@ -60,43 +67,30 @@ const Category = () => {
     autoplay: true,
     centerMode: true,
     autoplaySpeed: 3000,
-    nextArrow: <NextArrow />, // Use the custom Next arrow
-    prevArrow: <PrevArrow />, // Use the custom Prev arrow
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
   };
 
-  const handleFilter = (category) => {
-    setSelectedCategory(category); // Set the selected category
-    dispatch(filterFurniture(category)); // Dispatch the filter action
+  const handleClick = (catId) => {
+    dispatch(filterFurniture(catId));
+    navigate(`category/${catId.toLowerCase()}`);
   };
-
-  // Filter images based on the selected category
-  const filteredImages =
-    selectedCategory === "All"
-      ? images
-      : images.filter((item) => item.category === selectedCategory);
 
   return (
     <>
       <div className="carousel-container">
         <div className="Featuretitle">Feature Product</div>
-
-        {/* Image Slider */}
         <Slider {...settings}>
-          {categories.map((filterItem) => (
-            <div
-              key={filterItem}
-              className={`category-item ${filterItem === selectedCategory ? "active" : ""}`}
-              onClick={() => handleFilter(filterItem)}
-              style={{ cursor: "pointer" }} // Make the div act like a button
+          {filterimages.map((item) => (
+            <div title={item.name}
+              key={item.id}
+              className="sliders"
+              onClick={() => handleClick(item.category)}
             >
-              {filteredImages.map((item) => (
-                <div key={item.id} className="sliders">
-                  <div className="imgCrousal">
-                    <img src={item.url} alt={item.alt} />
-                    <div className="catTitle">{item.name}</div>
-                  </div>
-                </div>
-              ))}
+              <div className="imgCrousal">
+                <img src={item.url} alt={item.alt} />
+                <div className="catTitle">{item.name}</div>
+              </div>
             </div>
           ))}
         </Slider>
