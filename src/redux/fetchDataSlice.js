@@ -1,3 +1,4 @@
+// src/redux/fetchDataSlice.js
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { furnitureData } from "../data"; // Assuming this is where your furnitureData is from
 
@@ -11,7 +12,8 @@ const initialState = {
   data: [],
   error: null,
   filterData: [],
-  furnitureInfo: [],
+  furnitureInfo: null, // Changed to null initially
+  cart: [],
 };
 
 const fetchData = createSlice({
@@ -20,7 +22,6 @@ const fetchData = createSlice({
   reducers: {
     filterFurniture: (state, action) => {
       const category = action.payload.trim().toLowerCase();
-
       if (category === "all") {
         state.filterData = state.data;
       } else {
@@ -35,11 +36,57 @@ const fetchData = createSlice({
 
     furnitureDetail: (state, action) => {
       const fDetails = action.payload;
-      state.furnitureInfo = state.data.find(
+      const product = state.data.find(
         (productInfo) => productInfo.id === fDetails
       );
+      if (product) {
+        state.furnitureInfo = {
+          ...product,
+          quantity: 1, // Initial quantity is 1
+          totalPrice: product.price, // Total price is initially just the product price
+        };
+      }
+    },
+
+    increment: (state) => {
+      if (state.furnitureInfo) {
+        state.furnitureInfo.quantity += 1; // Increment quantity
+        state.furnitureInfo.totalPrice =
+          state.furnitureInfo.price * state.furnitureInfo.quantity; // Update total price
+      }
+    },
+
+    decrement: (state) => {
+      if (state.furnitureInfo && state.furnitureInfo.quantity > 1) {
+        state.furnitureInfo.quantity -= 1; // Decrement quantity, ensuring it doesn't go below 1
+        state.furnitureInfo.totalPrice =
+          state.furnitureInfo.price * state.furnitureInfo.quantity; // Update total price
+      }
+    },
+
+    addToCart: (state, action) => {
+      const cartId = action.payload;
+      const isProductInCart = state.cart.find((item) => item.id === cartId); // Check if product already exists in cart
+
+      if (isProductInCart) {
+        // If product exists, increment its quantity and update totalPrice
+        isProductInCart.quantity += 1;
+        isProductInCart.totalPrice = (
+          isProductInCart.price * isProductInCart.quantity
+        ).toFixed(2);
+      } else {
+        const productToAdd = state.furnitureInfo;
+
+        if (productToAdd) {
+          // If product is found, add it to the cart with the current quantity and totalPrice
+          state.cart.push({
+            ...productToAdd,
+          });
+        }
+      }
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchingData.pending, (state) => {
@@ -58,5 +105,11 @@ const fetchData = createSlice({
   },
 });
 
-export const { filterFurniture,furnitureDetail } = fetchData.actions;
+export const {
+  filterFurniture,
+  furnitureDetail,
+  increment,
+  decrement,
+  addToCart,
+} = fetchData.actions;
 export default fetchData.reducer;
