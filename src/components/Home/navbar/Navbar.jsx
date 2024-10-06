@@ -4,22 +4,21 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { cart } = useSelector((state) => state.furniture);
   return (
     <div className="navbar">
       <div className="navbarWrapper">
         <div className="navLeft">
-            <Link to="/" style={{display:"flex"}}>
-              <div style={{color:"rgb(236, 154, 1)"}}>
-                F
-              </div>
-              <div>
-            urniFlex.
-              </div>
-            </Link>
-            </div>
+          <Link to="/" style={{ display: "flex" }}>
+            <div style={{ color: "rgb(236, 154, 1)" }}>F</div>
+            <div>urniFlex.</div>
+          </Link>
+        </div>
         <div className="navCenter">
           <ul>
             <li>
@@ -42,7 +41,10 @@ const Navbar = () => {
         <div className="navRight">
           <SearchOutlinedIcon />
           <FavoriteBorderOutlinedIcon />
-          <ShoppingBagOutlinedIcon />
+          <div className="add-to-cart" onClick={() => navigate("/cart")}>
+            <ShoppingBagOutlinedIcon />
+            <div className="cart-count">{cart.length}</div>
+          </div>
           <PersonOutlineOutlinedIcon />
         </div>
       </div>

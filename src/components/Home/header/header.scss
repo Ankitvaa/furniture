@@ -1,6 +1,8 @@
 @import "../../../global.scss";
+
 .header {
   background: $warning;
+
   .headerWrapper {
     padding: 16px 0px;
     color: #fff;
@@ -8,17 +10,56 @@
     margin: 0 auto;
     @include d_flex;
     justify-content: space-between;
-    .headerLeft {
+    align-items: center;
+
+    // Mobile-first: Default for smaller screens
+    flex-direction: column;
+    gap: 16px;
+    
+    .headerLeft,
+    .headerRight {
       @include d_flex;
       gap: 4px;
       @extend .body_4;
+      justify-content: center;
     }
+
     .headerCenter {
       @extend .body_2;
+      text-align: center;
     }
-    .headerRight {
-      @include d_flex;
-      @extend .body_4;
+
+    // Tablet and larger screens
+    @media (min-width: 768px) {
+      flex-direction: row;
+      gap: 0;
+
+      .headerLeft {
+        justify-content: flex-start;
+      }
+
+      .headerCenter {
+        text-align: center;
+        flex-grow: 1; // Centers the middle content properly on larger screens
+      }
+
+      .headerRight {
+        justify-content: flex-end;
+      }
+    }
+
+    // Desktop and large screens
+    @media (min-width: 1024px) {
+      padding: 16px 0;
+
+      .headerCenter {
+        font-size: 1.2rem; // Slightly increase font-size for better readability
+      }
+
+      .headerLeft,
+      .headerRight {
+        font-size: 1rem;
+      }
     }
   }
 }

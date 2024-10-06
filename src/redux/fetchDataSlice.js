@@ -1,8 +1,6 @@
-// src/redux/fetchDataSlice.js
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { furnitureData } from "../data"; // Assuming this is where your furnitureData is from
+import { furnitureData } from "../data";
 
-// Async thunk to fetch furniture data
 export const fetchingData = createAsyncThunk("fetch/data", async () => {
   return furnitureData;
 });
@@ -12,8 +10,9 @@ const initialState = {
   data: [],
   error: null,
   filterData: [],
-  furnitureInfo: null, // Changed to null initially
+  furnitureInfo: null,
   cart: [],
+  subtotal: 0, // Added subtotal field
 };
 
 const fetchData = createSlice({
@@ -48,32 +47,36 @@ const fetchData = createSlice({
       }
     },
 
-    increment: (state) => {
-      if (state.furnitureInfo) {
-        state.furnitureInfo.quantity += 1; // Increment quantity
-        state.furnitureInfo.totalPrice =
-          state.furnitureInfo.price * state.furnitureInfo.quantity; // Update total price
+    increment: (state, action) => {
+      const productId = action.payload;
+      const cartItem = state.cart.find((item) => item.id === productId);
+      if (cartItem) {
+        cartItem.quantity += 1; 
+        cartItem.totalPrice = cartItem.price * cartItem.quantity;
       }
+      // Recalculate subtotal after increment
+      state.subtotal = calculateSubtotal(state.cart);
     },
 
-    decrement: (state) => {
-      if (state.furnitureInfo && state.furnitureInfo.quantity > 1) {
-        state.furnitureInfo.quantity -= 1; // Decrement quantity, ensuring it doesn't go below 1
-        state.furnitureInfo.totalPrice =
-          state.furnitureInfo.price * state.furnitureInfo.quantity; // Update total price
+    decrement: (state, action) => {
+      const productId = action.payload;
+      const cartItem = state.cart.find((item) => item.id === productId); 
+      if (cartItem && cartItem.quantity > 1) {
+        cartItem.quantity -= 1;
+        cartItem.totalPrice = cartItem.price * cartItem.quantity;
       }
+      // Recalculate subtotal after decrement
+      state.subtotal = calculateSubtotal(state.cart);
     },
 
     addToCart: (state, action) => {
       const cartId = action.payload;
-      const isProductInCart = state.cart.find((item) => item.id === cartId); // Check if product already exists in cart
+      const isProductInCart = state.cart.find((item) => item.id === cartId);
 
       if (isProductInCart) {
-        // If product exists, increment its quantity and update totalPrice
         isProductInCart.quantity += 1;
-        isProductInCart.totalPrice = (
-          isProductInCart.price * isProductInCart.quantity
-        ).toFixed(2);
+        isProductInCart.totalPrice =
+          isProductInCart.price * isProductInCart.quantity; 
       } else {
         const productToAdd = state.furnitureInfo;
 
@@ -81,10 +84,21 @@ const fetchData = createSlice({
           // If product is found, add it to the cart with the current quantity and totalPrice
           state.cart.push({
             ...productToAdd,
+            totalPrice: productToAdd.price, // Set totalPrice initially to price
           });
         }
       }
+      // Recalculate subtotal after adding to cart
+      state.subtotal = calculateSubtotal(state.cart);
     },
+
+    removeFromCart: (state, action) => {
+      const productId = action.payload;
+      state.cart = state.cart.filter((item) => item.id !== productId);
+      // Recalculate subtotal after removing from cart
+      state.subtotal = calculateSubtotal(state.cart);
+    },
+    
   },
 
   extraReducers: (builder) => {
@@ -105,11 +119,17 @@ const fetchData = createSlice({
   },
 });
 
+// Function to calculate subtotal
+const calculateSubtotal = (cart) => {
+  return cart.reduce((total, item) => total + item.totalPrice, 0).toFixed(2);
+};
+
 export const {
   filterFurniture,
   furnitureDetail,
   increment,
   decrement,
   addToCart,
+  removeFromCart,
 } = fetchData.actions;
 export default fetchData.reducer;

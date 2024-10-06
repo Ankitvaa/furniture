@@ -10,6 +10,7 @@ import Contact from "./pages/contact/Contact";
 import Blog from "./pages/Blogs/Blog";
 import Footer from "./components/Home/footer/Footer";
 import Pdp from "./pages/pdp/Pdp";
+import { Cart } from "./pages/cart/Cart";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/cart" element={<Cart/>} />
         </Routes>
         <Footer />
       </div>

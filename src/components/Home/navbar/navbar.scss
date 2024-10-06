@@ -1,17 +1,22 @@
 @import "../../../global.scss";
+
 .navbar {
-  padding: 10px 0px 100px 0px;
+  padding: 10px 0 100px 0;
   background: $furniture;
+
   .navbarWrapper {
     @include d_flex;
     justify-content: space-between;
+    align-items: center; /* Align items vertically */
     color: #fff;
     width: 92%;
     margin: 0 auto;
+
     .navLeft {
       @extend .heading_2;
       cursor: pointer;
     }
+
     .navCenter {
       ul {
         @include d_flex;
@@ -20,14 +25,101 @@
         gap: 20px;
 
         li {
-      @extend .body_3;
-      cursor: pointer;
+          @extend .body_3;
+          cursor: pointer;
         }
       }
     }
+
     .navRight {
       @include d_flex;
       gap: 20px;
+    }
+  }
+
+  // Mobile-first: Default small screen (flex column layout)
+  .navbarWrapper {
+    flex-direction: column;
+    gap: 20px;
+
+    .navCenter {
+      ul {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center; // Center-align menu items on smaller screens
+      }
+    }
+
+    .navRight {
+      justify-content: center;
+      .add-to-cart {
+        position: relative; // Allow absolute positioning of the count badge
+        cursor: pointer; // Change cursor on hover
+        display: flex; // Use flexbox for alignment
+        align-items: center; // Center items vertically
+
+        svg {
+          // Target the icon (assuming you're using an SVG)
+          width: 24px; // Set the width of the icon
+          height: 24px; // Set the height of the icon
+          color: #333; // Change the color of the icon
+          transition: color 0.3s ease; // Smooth color transition on hover
+
+          &:hover {
+            color: #ff6b6b; // Change color on hover
+          }
+        }
+
+        .cart-count {
+          // Class for the count badge
+          position: absolute; // Position it relative to the parent
+          top: -5px; // Adjust position vertically
+          right: -10px; // Adjust position horizontally
+          background: red; // Background color for the count badge
+          color: white; // Text color for the count
+          border-radius: 50%; // Make it circular
+          padding: 2px 6px; // Padding around the count
+          font-size: 0.8rem; // Font size for the count
+          font-weight: bold; // Make the text bold
+          display: flex; // Use flexbox to center the text
+          align-items: center; // Center items vertically
+          justify-content: center; // Center items horizontally
+        }
+      }
+    }
+  }
+
+  // Tablet and larger screens
+  @media (min-width: 768px) {
+    padding: 10px 0 60px 0; // Reduce padding for tablet screens
+    .navbarWrapper {
+      flex-direction: row;
+      gap: 0;
+
+      .navCenter ul {
+        flex-direction: row;
+        gap: 20px;
+      }
+    }
+  }
+
+  // Desktop and larger screens
+  @media (min-width: 1024px) {
+    padding: 10px 0; // Adjust padding for large screens
+    .navbarWrapper {
+      justify-content: space-between;
+
+      .navLeft {
+        font-size: 1.5rem; // Increase logo font size for visibility on desktop
+      }
+
+      .navCenter ul {
+        gap: 30px; // More space between menu items on larger screens
+      }
+
+      .navRight {
+        gap: 30px; // Increase spacing for icons/links on the right
+      }
     }
   }
 }
