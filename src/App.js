@@ -11,6 +11,7 @@ import Blog from "./pages/Blogs/Blog";
 import Footer from "./components/Home/footer/Footer";
 import Pdp from "./pages/pdp/Pdp";
 import { Cart } from "./pages/cart/Cart";
+import WishList from "./pages/wishList/WishList";
 
 function App() {
   return (
@@ -22,11 +23,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/category/:categoryName" element={<Categories />} />
-          <Route path="products/product/:productId" element={<Pdp/>}/>
+          <Route path="products/product/:productId" element={<Pdp />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/cart" element={<Cart/>} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/wishlist" element={<WishList />} />
         </Routes>
         <Footer />
       </div>

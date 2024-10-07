@@ -1,10 +1,10 @@
-.homeCategory {
-  display: grid;
+.wishList {
+display: grid;
 grid-template-columns: repeat(4, 1fr);
 
-  // display: flex;
-  // flex-wrap: wrap;
-  // justify-content: center;
+//   display: flex;
+//   flex-wrap: wrap;
+//   justify-content: center;
   padding: 20px;
   gap: 20px;
 

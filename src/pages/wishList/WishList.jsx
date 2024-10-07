@@ -1,0 +1,37 @@
+import "./wishlist.scss"
+import { useSelector, useDispatch } from "react-redux";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
+
+
+
+const WishList = () => {
+  const { wishList } = useSelector((state) => state.furniture);
+  console.log(wishList)
+  return (
+    <div className="wishList">
+        {wishList.map((item)=>{
+            return(
+                <>
+                <div className="wish">
+                    <img src={item.imageUrl} alt={item.name} />
+                         <div className="plpBottom">
+              <div className="name-price">
+                <div className="productTitle">
+                  {item.name}
+                </div>
+                <div className="productPrice">{item.price}</div>
+              </div>
+              <div className="cartIcon">
+                <ShoppingCart />
+              </div>
+            </div>
+                </div>
+            
+                </>
+            )
+        })}
+    </div>
+  )
+}
+
+export default WishList
