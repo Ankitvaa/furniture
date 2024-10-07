@@ -11,6 +11,7 @@ const initialState = {
   error: null,
   filterData: [],
   furnitureInfo: null,
+  wishList: [],
   cart: [],
   subtotal: 0, // Added subtotal field
 };
@@ -51,7 +52,7 @@ const fetchData = createSlice({
       const productId = action.payload;
       const cartItem = state.cart.find((item) => item.id === productId);
       if (cartItem) {
-        cartItem.quantity += 1; 
+        cartItem.quantity += 1;
         cartItem.totalPrice = cartItem.price * cartItem.quantity;
       }
       // Recalculate subtotal after increment
@@ -60,7 +61,7 @@ const fetchData = createSlice({
 
     decrement: (state, action) => {
       const productId = action.payload;
-      const cartItem = state.cart.find((item) => item.id === productId); 
+      const cartItem = state.cart.find((item) => item.id === productId);
       if (cartItem && cartItem.quantity > 1) {
         cartItem.quantity -= 1;
         cartItem.totalPrice = cartItem.price * cartItem.quantity;
@@ -76,7 +77,7 @@ const fetchData = createSlice({
       if (isProductInCart) {
         isProductInCart.quantity += 1;
         isProductInCart.totalPrice =
-          isProductInCart.price * isProductInCart.quantity; 
+          isProductInCart.price * isProductInCart.quantity;
       } else {
         const productToAdd = state.furnitureInfo;
 
@@ -98,7 +99,21 @@ const fetchData = createSlice({
       // Recalculate subtotal after removing from cart
       state.subtotal = calculateSubtotal(state.cart);
     },
-    
+
+    addToWishList: (state, action) => {
+      const addWish = action.payload;
+      const wishItem = state.wishList.find((item) => item.id === addWish);
+      if (wishItem) {
+        state.wishList = state.wishList.filter((item) => item.id !== addWish)
+      }
+      else {
+        const newWish = state.data.find((item) => item.id === addWish)
+        state.wishList.push({
+          ...newWish,
+        })
+      }
+    }
+
   },
 
   extraReducers: (builder) => {
@@ -131,5 +146,6 @@ export const {
   decrement,
   addToCart,
   removeFromCart,
+  addToWishList
 } = fetchData.actions;
 export default fetchData.reducer;

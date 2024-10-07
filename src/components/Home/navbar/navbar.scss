@@ -58,23 +58,31 @@
         display: flex; // Use flexbox for alignment
         align-items: center; // Center items vertically
 
-        svg {
-          // Target the icon (assuming you're using an SVG)
-          width: 24px; // Set the width of the icon
-          height: 24px; // Set the height of the icon
-          color: #333; // Change the color of the icon
-          transition: color 0.3s ease; // Smooth color transition on hover
-
-          &:hover {
-            color: #ff6b6b; // Change color on hover
-          }
-        }
-
         .cart-count {
           // Class for the count badge
           position: absolute; // Position it relative to the parent
           top: -5px; // Adjust position vertically
           right: -10px; // Adjust position horizontally
+          background: red; // Background color for the count badge
+          color: white; // Text color for the count
+          border-radius: 50%; // Make it circular
+          padding: 2px 6px; // Padding around the count
+          font-size: 0.8rem; // Font size for the count
+          font-weight: bold; // Make the text bold
+          display: flex; // Use flexbox to center the text
+          align-items: center; // Center items vertically
+          justify-content: center; // Center items horizontally
+        }
+      }
+
+      .wishListIcon{
+        cursor: pointer;
+        position: relative;
+
+        .wishCount{
+          position: absolute;
+          top: -5px;
+          right: -10px;
           background: red; // Background color for the count badge
           color: white; // Text color for the count
           border-radius: 50%; // Make it circular

@@ -9,7 +9,8 @@ import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { cart } = useSelector((state) => state.furniture);
+  const { cart,wishList} = useSelector((state) => state.furniture);
+  console.log(wishList.length)
   return (
     <div className="navbar">
       <div className="navbarWrapper">
@@ -40,7 +41,10 @@ const Navbar = () => {
         </div>
         <div className="navRight">
           <SearchOutlinedIcon />
+          <div onClick={()=>navigate("/wishList")} className="wishListIcon">
           <FavoriteBorderOutlinedIcon />
+          <div className="wishCount">{wishList.length}</div>
+          </div>
           <div className="add-to-cart" onClick={() => navigate("/cart")}>
             <ShoppingBagOutlinedIcon />
             <div className="cart-count">{cart.length}</div>
