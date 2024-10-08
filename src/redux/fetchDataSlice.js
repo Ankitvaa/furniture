@@ -14,6 +14,9 @@ const initialState = {
   wishList: [],
   cart: [],
   subtotal: 0, // Added subtotal field
+  currentPage: 1, // The current page number
+  itemsPerPage: 10, // Number of items per page
+  totalItems: 0,
 };
 
 const fetchData = createSlice({
@@ -33,7 +36,6 @@ const fetchData = createSlice({
         });
       }
     },
-
     furnitureDetail: (state, action) => {
       const fDetails = action.payload;
       const product = state.data.find(
@@ -47,7 +49,6 @@ const fetchData = createSlice({
         };
       }
     },
-
     increment: (state, action) => {
       const productId = action.payload;
       const cartItem = state.cart.find((item) => item.id === productId);
@@ -58,7 +59,6 @@ const fetchData = createSlice({
       // Recalculate subtotal after increment
       state.subtotal = calculateSubtotal(state.cart);
     },
-
     decrement: (state, action) => {
       const productId = action.payload;
       const cartItem = state.cart.find((item) => item.id === productId);
@@ -69,7 +69,6 @@ const fetchData = createSlice({
       // Recalculate subtotal after decrement
       state.subtotal = calculateSubtotal(state.cart);
     },
-
     addToCart: (state, action) => {
       const cartId = action.payload;
       const isProductInCart = state.cart.find((item) => item.id === cartId);
@@ -92,14 +91,11 @@ const fetchData = createSlice({
       // Recalculate subtotal after adding to cart
       state.subtotal = calculateSubtotal(state.cart);
     },
-
     removeFromCart: (state, action) => {
       const productId = action.payload;
       state.cart = state.cart.filter((item) => item.id !== productId);
-      // Recalculate subtotal after removing from cart
       state.subtotal = calculateSubtotal(state.cart);
     },
-
     addToWishList: (state, action) => {
       const addWish = action.payload;
       const wishItem = state.wishList.find((item) => item.id === addWish);
@@ -112,8 +108,33 @@ const fetchData = createSlice({
           ...newWish,
         })
       }
-    }
+    },
+    removeFromWishList: (state, action) => {
+      state.wishList = state.wishList.filter((item) => item.id !== action.payload)
+    },
+    addToCartFromWishList: (state, action) => {
+      const cartId = action.payload;
+      const isProduct = state.cart.find((item) => item.id === cartId);
+      if (isProduct) {
 
+      }
+      else {
+        const productToAdd = state.wishList.find((item) => item.id === cartId);
+        state.cart.push({
+          ...productToAdd,
+          quantity: 1,
+          totalPrice: productToAdd.price, // Set totalPrice initially to price
+
+        })
+      }
+      state.subtotal = calculateSubtotal(state.cart);
+    },
+    setPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
+    setItemsPerPage: (state, action) => {
+      state.itemsPerPage = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -146,6 +167,8 @@ export const {
   decrement,
   addToCart,
   removeFromCart,
-  addToWishList
+  addToWishList,
+  removeFromWishList,
+  addToCartFromWishList
 } = fetchData.actions;
 export default fetchData.reducer;

@@ -58,18 +58,39 @@ const Category = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    centerMode: true,
-    autoplaySpeed: 3000,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
-  };
+ const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  autoplay: true,
+  centerMode: true,
+  autoplaySpeed: 3000,
+  nextArrow: <NextArrow />,
+  prevArrow: <PrevArrow />,
+  responsive: [
+    {
+      breakpoint: 1024, // For tablet screens and below
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 768, // For mobile screens and below
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: true
+      }
+    }
+  ]
+};
+
 
   const handleClick = (catId) => {
     dispatch(filterFurniture(catId));

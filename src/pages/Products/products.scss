@@ -1,16 +1,11 @@
 .homeCategory {
   display: grid;
-grid-template-columns: repeat(4, 1fr);
-
-  // display: flex;
-  // flex-wrap: wrap;
-  // justify-content: center;
+  grid-template-columns: repeat(4, 1fr); // Default for desktop
   padding: 20px;
   gap: 20px;
 
   > div {
     cursor: pointer;
-    flex: 1 1 calc(25% - 20px);
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -27,13 +22,14 @@ grid-template-columns: repeat(4, 1fr);
       height: 250px;
       object-fit: cover;
     }
-    .favIcon{
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        border-radius: 50%;
-        padding: 4px;
-        transition: background-color 0.3s ease,
+
+    .favIcon {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      border-radius: 50%;
+      padding: 4px;
+      transition: background-color 0.3s ease;
     }
 
     .plpBottom {
@@ -42,6 +38,7 @@ grid-template-columns: repeat(4, 1fr);
       justify-content: space-between;
       padding: 10px;
       background-color: #004d40;
+
       .name-price {
         .productTitle {
           font-size: 1.2em;
@@ -55,6 +52,7 @@ grid-template-columns: repeat(4, 1fr);
           color: #fff;
         }
       }
+
       .cartIcon {
         position: relative;
         background-color: gold;
@@ -65,21 +63,42 @@ grid-template-columns: repeat(4, 1fr);
         height: 40px;
         :first-of-type {
           transform: translate(0%, 20%);
-        //   width: 20px;
         }
       }
     }
   }
-}
 
-@media (max-width: 768px) {
-  .homeCategory > div {
-    flex: 1 1 calc(50% - 20px);
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr); // For large tablets
   }
-}
 
-@media (max-width: 480px) {
-  .homeCategory > div {
-    flex: 1 1 100%;
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, 1fr); // For tablets
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr); // Small tablets and landscape phones
+    padding: 10px;
+
+    > div {
+      margin-bottom: 15px;
+
+      img {
+        height: 200px; // Adjust image height for smaller screens
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr; // For mobile devices
+    padding: 5px;
+
+    > div {
+      margin-bottom: 10px;
+
+      img {
+        height: 150px; // Further adjust image height for mobile
+      }
+    }
   }
 }
